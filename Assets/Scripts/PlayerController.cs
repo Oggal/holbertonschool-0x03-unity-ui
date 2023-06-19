@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
     public float speed;
     public int health;
+    public TMP_Text scoreText, healthText;
     private int score;
     [SerializeField] Rigidbody rb;
     [SerializeField] int StartHealth = 5;
@@ -19,6 +21,9 @@ public class PlayerController : MonoBehaviour
             rb = GetComponent<Rigidbody>();
         score = 0;
         health = StartHealth;
+        SetScoreText();
+        SetHealthText();
+
     }
 
     // Update is called once per frame
@@ -48,7 +53,7 @@ public class PlayerController : MonoBehaviour
         {
             other.gameObject.SetActive(false);
             score++;
-            Debug.Log("Score: " + score);
+            SetScoreText();
         }
     }
 
@@ -56,13 +61,14 @@ public class PlayerController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Trap"))
         {
-            if(--health <= 0)
+            health--;
+            SetHealthText();
+            if(health <= 0)
             {
                 Debug.Log("Game Over!");
                 UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
                 return;
             }
-            Debug.Log("Health: " + health);
         }
     }
 
@@ -71,5 +77,24 @@ public class PlayerController : MonoBehaviour
         if (!other.gameObject.CompareTag("Goal"))
             return;
         Debug.Log("You win!");
+    }
+
+    void SetScoreText()
+    {
+        if (scoreText == null)
+        {
+            Debug.Log("Score: " + score);
+            return;
+        }
+        scoreText.text = $"Score: {score}";
+    }
+
+    void SetHealthText()
+    {
+        if(healthText == null)
+        {
+            Debug.Log("Health: " + health);
+        }
+        
     }
 }
