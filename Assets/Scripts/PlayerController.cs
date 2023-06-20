@@ -1,14 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
     public float speed;
     public int health;
-    public TMP_Text scoreText, healthText;
+    public Text scoreText, healthText;
     private int score;
     [SerializeField] Rigidbody rb;
     [SerializeField] int StartHealth = 5;
