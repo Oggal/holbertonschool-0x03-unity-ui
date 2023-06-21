@@ -8,7 +8,8 @@ public class PlayerController : MonoBehaviour
 {
     public float speed;
     public int health;
-    public Text scoreText, healthText;
+    public Text scoreText, healthText, WinText;
+    public Image WinLoseBG;
     private int score;
     [SerializeField] Rigidbody rb;
     [SerializeField] int StartHealth = 5;
@@ -96,5 +97,30 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Health: " + health);
         }
         
+    }
+
+    void ShowWinScreen()
+    {
+        if (WinLoseBG == null)
+            return;
+        WinText.color = Color.black;
+        WinText.text = "You Win!";
+        WinLoseBG.color = Color.green;
+        WinLoseBG.gameObject.SetActive(true);
+    }
+
+    void ShowLoseScreen()
+    {
+        if (WinLoseBG == null)
+            return;
+        WinText.color = Color.white;
+        WinText.text = "Game Over";
+        WinLoseBG.color = Color.red;
+        WinLoseBG.gameObject.SetActive(true);
+    }
+    IEnumerator LoadScene(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
     }
 }
